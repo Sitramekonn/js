@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Order Form</title>
+</head>
+<body>
+
+<h1>Order Your Tree</h1>
+<form id="tree-order-form">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name"><br><br>
+
+    <label for="zip">Zip Code:</label>
+    <input type="text" id="zip" name="zip"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="tree">Tree Type:</label>
+    <input type="text" id="tree" name="tree"><br><br>
+
+    <button type="submit">Submit Order</button>
+</form>
+
+<div id="error-container" style="color: red;"></div>
+<p id="order-summary"></p>
+
+<script>
+    document.getElementById('tree-order-form').addEventListener('submit', function (event) {
+        event.preventDefault();  // Prevent form submission so we can handle validation
+
+        let errorMessages = [];  // Array to store error messages
+
+        // Validate Name
+        let name = document.getElementById('name').value;
+        if (name === '') {
+            errorMessages.push('Name is required.');
+        }
+
+        // Validate Zip Code (must be a number)
+        let zipCode = document.getElementById('zip').value;
+        if (isNaN(zipCode) || zipCode === '') {
+            errorMessages.push('Zip code must be a number.');
+        }
+
+        // Validate Email
+        let email = document.getElementById('email').value;
+        if (email === '') {
+            errorMessages.push('Email is required.');
+        }
+
+        // Validate Tree Type
+        let treeType = document.getElementById('tree').value;
+        if (treeType === '') {
+            errorMessages.push('Tree type is required.');
+        }
+
+        // Display Errors or Confirmation
+        let errorContainer = document.getElementById('error-container');
+        let summaryContainer = document.getElementById('order-summary');
+        
+        if (errorMessages.length > 0) {
+            // Display all error messages
+            errorContainer.innerHTML = errorMessages.join('<br>');
+            summaryContainer.innerHTML = '';  // Clear the order summary if there are errors
+        } else {
+            // If no errors, show confirmation
+            errorContainer.innerHTML = '';  // Clear any previous errors
+            summaryContainer.innerHTML = `Thank you, ${name}. Your order for a ${treeType} has been placed!`;
+        }
+    });
+</script>
+
+</body>
+</html>
